@@ -1,0 +1,13 @@
+# Ignore node modules folder
+node_modules/
+
+# Ignore environmental variables
+*.env
+*.env.local
+.env.local
+
+# Ignore security rules for firebase
+security-rules.json
+
+# Ignote mac folder configs
+*.DS_Store
