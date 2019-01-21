@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 export class AddFishForm extends Component {
     nameRef = React.createRef();
@@ -7,14 +8,18 @@ export class AddFishForm extends Component {
     descRef = React.createRef();
     imageRef = React.createRef();
 
+    static propTypes = {
+        addFish: PropTypes.func.isRequired
+    };
+
     createFish = e => {
         e.preventDefault();
         const fish = {
-            nameRef: this.nameRef.current.value,
-            priceRef: parseFloat(this.priceRef.current.value),
-            statusRef: this.statusRef.current.value,
-            descRef: this.descRef.current.value,
-            imageRef: this.imageRef.current.value
+            name: this.nameRef.current.value,
+            price: parseFloat(this.priceRef.current.value),
+            status: this.statusRef.current.value,
+            desc: this.descRef.current.value,
+            image: this.imageRef.current.value
         };
         this.props.addFish(fish);
         e.currentTarget.reset();
@@ -23,10 +28,10 @@ export class AddFishForm extends Component {
     return (
       <form className="fish-edit" onSubmit={this.createFish}>
         <input type="text" name="name" ref={this.nameRef} placeholder="Name" />
-        <input type="text" name="price" ref={this.priceRef} placeholder="Price" />
+        <input type="number" name="price" ref={this.priceRef} placeholder="Price" />
         <select name="status" ref={this.statusRef}>
-          <option defaultValue="available">Fresh!</option>
-          <option defaultValue="unavailable">Sold Out!</option>
+          <option value="available">Fresh!</option>
+          <option value="unavailable">Sold Out!</option>
         </select>
         <textarea name="desc" ref={this.descRef} placeholder="Description" />
         <input type="text" name="image" ref={this.imageRef} placeholder="Image" />

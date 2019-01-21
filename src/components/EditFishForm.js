@@ -1,14 +1,23 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {fishPropType} from './prop-types/propTypes';
 
 export class EditFishForm extends Component {
-    handleChange = e => {
-        // 1. Take a copy of the current fish
-        const updatedFish = { 
-            ...this.props.fish,
-            [e.target.name]: e.target.value
-        };
-        this.props.updateFish(this.props.index, updatedFish);
+  static propTypes = {
+    fish: PropTypes.shape (fishPropType).isRequired,
+    updateFish: PropTypes.func.isRequired,
+    deleteFish: PropTypes.func.isRequired,
+    index: PropTypes.string.isRequired,
+  };
+
+  handleChange = e => {
+    // 1. Take a copy of the current fish
+    const updatedFish = {
+      ...this.props.fish,
+      [e.currentTarget.name]: e.currentTarget.name === 'price' ? parseFloat(e.currentTarget.value) : e.currentTarget.value
     };
+    this.props.updateFish (this.props.index, updatedFish);
+  };
 
   render () {
     return (
@@ -20,7 +29,7 @@ export class EditFishForm extends Component {
           value={this.props.fish.name}
         />
         <input
-          type="text"
+          type="number"
           name="price"
           onChange={this.handleChange}
           value={this.props.fish.price}
@@ -44,7 +53,9 @@ export class EditFishForm extends Component {
           onChange={this.handleChange}
           value={this.props.fish.image}
         />
-        <button onClick={() => this.props.deleteFish(this.props.index)}>Remove Fish</button>
+        <button onClick={() => this.props.deleteFish (this.props.index)}>
+          Remove Fish
+        </button>
       </div>
     );
   }
